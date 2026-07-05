@@ -1,0 +1,51 @@
+name: Build Mappa Leggera
+
+on:
+  schedule:
+    - cron: '0 0 1 * *' 
+  workflow_dispatch: # "Run workflow" manual trigger
+
+# Permissions to allow writing to the repository contents for creating releases
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Controlla il codice del repository
+        uses: actions/checkout@v4
+
+      - name: Installa Osmium Tool nativo
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y osmium-tool
+
+      - name: Scarica l'estratto dell'intera Italia da Geofabrik
+        run: |
+          echo "░░░| Download di italy-latest.osm.pbf..."
+          curl -L -o italia.osm.pbf https://download.geofabrik.de/europe/italy-latest.osm.pbf
+          echo "█░░| Download completato."
+
+      - name: Filtra la mappa con Osmium (Solo strade, confini e civici)
+        run: |
+          echo "██░| Avvio del filtraggio della mappa..."
+          osmium tags-filter italia.osm.pbf w/highway r/boundary=administrative n/place nwr/addr -o italia_leggera.osm.pbf --overwrite
+    
+          echo "███| Resoconto dimensioni:"
+          ls -lh italia.osm.pbf italia_leggera.osm.pbf
+
+      - name: Pubblica o aggiorna il file nelle GitHub Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          files: italia_leggera.osm.pbf
+          tag_name: v1.0.0
+          name: "File della mappa leggera di tutta Italia"
+          body: |
+            Estratto stradale, amministrativo e numerazione civica di tutta Italia.
+            Generato tramite Osmium.
+            
+            Ultimo aggiornamento: ${{ github.event.repository.updated_at }}
+          draft: false
+          prerelease: false
+          make_latest: true
