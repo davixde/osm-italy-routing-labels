@@ -5,12 +5,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - NOMINATIM_PBF_URL=https://github.com/davixde/osm-italy-routing-labels/releases/download/v1.0.0/italia_leggera.osm.pbf
-      - NOMINATIM_FLATNODE_FILE=/var/lib/nominatim/flatnode.file
+      - PBF_URL=https://github.com/davixde/osm-italy-routing-labels/releases/download/v1.0.0/italia_leggera.osm.pbf
+      - REPLICATION_URL=https://download.geofabrik.de/europe/italy-updates/
     volumes:
-      - nominatim-data:/var/lib/nominatim
+      - ./nominatim-data:/var/lib/nominatim
     shm_size: '1gb'
     restart: always
-
-volumes:
-  nominatim-data:
