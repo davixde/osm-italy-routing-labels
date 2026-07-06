@@ -14,8 +14,6 @@ n/place
 nwr/addr
 ```
 [^1]: Settimanalmente, ogni lunedì alle 00:00 UTC
-
-- [ ] #1
   
 ## Integrare la mappa
 **Curl:**
