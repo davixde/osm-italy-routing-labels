@@ -1,4 +1,4 @@
-name: Build Mappa Leggera
+name: Build
 
 on:
   schedule:
@@ -16,6 +16,10 @@ jobs:
       - name: Controlla il codice del repository
         uses: actions/checkout@v4
 
+      - name: Imposta la data corrente
+        id: date
+        run: echo "today=$(date +'%d-%m-%Y')" >> $GITHUB_OUTPUT
+
       - name: Installa Osmium Tool nativo
         run: |
           sudo apt-get update
@@ -24,10 +28,10 @@ jobs:
       - name: Scarica l'estratto dell'intera Italia da Geofabrik
         run: |
           echo "░░░| Download di italy-latest.osm.pbf..."
-          curl -L -o italia.osm.pbf https://download.geofabrik.de/europe/italy-latest.osm.pbf
+          curl -L --retry 3 -o italia.osm.pbf https://download.geofabrik.de/europe/italy-latest.osm.pbf
           echo "█░░| Download completato."
 
-      - name: Filtra la mappa con Osmium (Solo strade, confini e civici)
+      - name: Filtra la mappa con Osmium
         run: |
           echo "██░| Avvio del filtraggio della mappa..."
           osmium tags-filter italia.osm.pbf w/highway r/boundary=administrative r/boundary=postal_code nwr/place nwr/addr:* -o italia_leggera.osm.pbf --overwrite
@@ -35,17 +39,18 @@ jobs:
           echo "███| Resoconto dimensioni:"
           ls -lh italia.osm.pbf italia_leggera.osm.pbf
 
-      - name: Pubblica o aggiorna il file nelle GitHub Releases
+      - name: Pulizia file temporanei
+        run: rm -f italia.osm.pbf
+
+      - name: Pubblica il file nelle GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
           files: italia_leggera.osm.pbf
-          tag_name: v1.0.0
-          name: "File della mappa leggera di tutta Italia"
+          tag_name: ${{ steps.date.outputs.today }}
+          name: "File mappa"
           body: |
-            Estratto stradale, amministrativo e numerazione civica di tutta Italia.
-            Generato tramite Osmium.
-            
-            Ultimo aggiornamento: ${{ github.event.repository.updated_at }}
+            📅 **Data di generazione:** ${{ steps.date.outputs.today }}
+            🏃 [**Runner**](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
           draft: false
           prerelease: false
           make_latest: true
