@@ -46,11 +46,11 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: italia_leggera.osm.pbf
-          tag_name: ${{ steps.date.outputs.today }}
+          tag_name: "latest"
           name: "File mappa"
           body: |
             📅 **Data di generazione:** ${{ steps.date.outputs.today }}
-            🏃 [**Runner**](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            🏃 **Runner:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           draft: false
           prerelease: false
           make_latest: true
