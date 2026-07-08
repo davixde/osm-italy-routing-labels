@@ -10,8 +10,9 @@ Il risultato è un file ```.osm.pbf``` 11 volte più leggero, ottimizzato per la
 ```py
 w/highway
 r/boundary=administrative
-n/place
-nwr/addr
+r/boundary=postal_code
+nwr/place
+nwr/addr:*
 ```
 [^1]: Settimanalmente, ogni lunedì alle 00:00 UTC
   

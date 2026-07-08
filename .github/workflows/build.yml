@@ -30,7 +30,7 @@ jobs:
       - name: Filtra la mappa con Osmium (Solo strade, confini e civici)
         run: |
           echo "██░| Avvio del filtraggio della mappa..."
-          osmium tags-filter italia.osm.pbf w/highway r/boundary=administrative n/place nwr/addr -o italia_leggera.osm.pbf --overwrite
+          osmium tags-filter italia.osm.pbf w/highway r/boundary=administrative r/boundary=postal_code nwr/place nwr/addr:* -o italia_leggera.osm.pbf --overwrite
     
           echo "███| Resoconto dimensioni:"
           ls -lh italia.osm.pbf italia_leggera.osm.pbf
