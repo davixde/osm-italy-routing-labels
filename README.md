@@ -37,4 +37,4 @@ cd osm-italy-routing-labels
 ```bash
 docker compose up -d
 ```
-- (Opzionale) Scaricare (nominatim-ui)[https://github.com/osm-search/nominatim-ui/releases]
+- (Opzionale) Scaricare [nominatim-ui](https://github.com/osm-search/nominatim-ui/releases)
