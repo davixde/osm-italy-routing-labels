@@ -63,7 +63,7 @@ jobs:
       - name: Attendi il completamento dell'importazione
         run: |
           echo "Monitoraggio dell'importazione..."
-          timeout=10800 # 3 ore
+          timeout=19800 # 5.5 ore
           elapsed=0
           while true; do
             # Verifica se il container è ancora in esecuzione
@@ -90,7 +90,7 @@ jobs:
             elapsed=$((elapsed + 10))
             
             if [[ $elapsed -ge $timeout ]]; then
-              echo "Errore: Raggiunto il timeout di 3 ore per l'importazione!"
+              echo "Errore: Raggiunto il timeout di 5.5 ore per l'importazione!"
               docker logs nominatim-precompiled || true
               exit 1
             fi
