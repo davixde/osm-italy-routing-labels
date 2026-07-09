@@ -38,3 +38,15 @@ cd osm-italy-routing-labels
 docker compose up -d
 ```
 - (Opzionale) Scaricare [nominatim-ui](https://github.com/osm-search/nominatim-ui/releases)
+
+## Avviare Nominatim tramite Immagine Docker Precompilata (Istantaneo)
+Se non vuoi eseguire l'importazione locale (che richiede tempo e risorse hardware), puoi utilizzare l'immagine Docker precompilata con il database già popolato, ospitata su GitHub Container Registry:
+
+```bash
+docker run -d \
+  --name nominatim-italy \
+  -p 8080:8080 \
+  ghcr.io/davixde/osm-italy-routing-labels:latest
+```
+Il container si avvierà in pochi secondi pronto a rispondere alle query di geocoding.
+
