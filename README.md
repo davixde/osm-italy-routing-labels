@@ -1,10 +1,12 @@
 # 🇮🇹 osm-italy-routing-labels
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/davixde/osm-italy-routing-labels/build.yml?style=for-the-badge&label=Action)](https://github.com/davixde/osm-italy-routing-labels/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/davixde/osm-italy-routing-labels/build.yml?style=for-the-badge&label=BUILD%20MAPPA)](https://github.com/davixde/osm-italy-routing-labels/actions/workflows/build.yml)
+[![Docker Status](https://img.shields.io/github/actions/workflow/status/davixde/osm-italy-routing-labels/docker-build.yml?style=for-the-badge&label=DOCKER-PRECOMPILATO)](https://github.com/davixde/osm-italy-routing-labels/actions/workflows/docker-build.yml)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/davixde/osm-italy-routing-labels?style=for-the-badge&label=release&color=blue)](https://github.com/davixde/osm-italy-routing-labels/releases/latest)
 
 GitHub Action che scarica periodicamente[^1] la [mappa d'Italia aggiornata da Geofabrik](https://download.geofabrik.de/europe/italy.html), la filtra con [Osmium](https://github.com/osmcode/osmium-tool) e la rilascia nei [Releases](https://github.com/davixde/osm-italy-routing-labels/releases)
 
 Il risultato è un file ```.osm.pbf``` 11 volte più leggero, ottimizzato per la geocodifica e la ricerca di indirizzi con Nominatim.
+Inoltre verrà anche generata una immagine Docker pre-compilata con il database già importato e pronto all'uso
 
 ### Query del filtro
 ```py
