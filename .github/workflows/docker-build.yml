@@ -101,8 +101,12 @@ jobs:
           IMAGE_NAME=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           TAG_DATE="${{ steps.date.outputs.today }}"
           
+          echo "Arresto pulito dei servizi nel container..."
+          docker exec nominatim-precompiled service apache2 stop || true
+          docker exec nominatim-precompiled service postgresql stop || true
+          
           echo "Arresto del container..."
-          docker stop nominatim-precompiled
+          docker stop -t 60 nominatim-precompiled
           
           echo "Creazione dell'immagine $IMAGE_NAME:latest..."
           docker commit nominatim-precompiled $IMAGE_NAME:latest
