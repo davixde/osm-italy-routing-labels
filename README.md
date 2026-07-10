@@ -15,6 +15,7 @@ r/boundary=administrative
 r/boundary=postal_code
 nwr/place
 nwr/addr:*
+n/emergency=defibrillator
 ```
 [^1]: Settimanalmente, ogni lunedì alle 00:00 UTC
   
